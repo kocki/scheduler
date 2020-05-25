@@ -177,7 +177,7 @@
           <td>${event.scheduled}</td>
           <td>${getEventTypeName(event)}</td>
           <td>${event.description}</td>
-          <td>${event.data}</td>
+          <td>${event.event_data}</td>
           <td>
             <button class="btn btn-info" v-on:click="getEvent(event.id)">
               Edit
@@ -220,7 +220,7 @@
                           id="event_type"
                           required
                           v-model="newEvent.event_type_id">
-                    <option  :value="null" selected disabled hidden>Pick one...</option>
+                    <option :value="null" selected disabled hidden>Pick one...</option>
                     <option v-for="(event_type) in event_types"
                             :key="event_type.id"
                             :value="event_type.id">${event_type.name}
@@ -325,6 +325,9 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
+<!-- other requirements -->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>-->
+
 <!-- vue.js files -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
@@ -341,13 +344,29 @@
       currentEvent: {},
       message: null,
       newEvent: {scheduled: null, event_type_id: null, event_data: null, description: null},
-      search_term: ''
+      search_term: '',
+      eventSocket: new WebSocket('ws://' + window.location.host + '/ws/events/')
     },
     mounted: function () {
       this.getEventTypes();
       this.getEvents();
+      this.initChannels();
     },
     methods: {
+      initChannels: function () {
+        const _this = this
+        this.eventSocket.onmessage = function (e) {
+          const data = JSON.parse(e.data);
+          console.log('Channels receive:', e);
+          if (data.action) {
+            _this.getEvents();
+          }
+        };
+        this.eventSocket.onclose = function (e) {
+          // ToDo: logic to re-open connection
+          console.error('Socket closed unexpectedly');
+        };
+      },
       getEventTypes: function () {
         let api_url = '/api/events/types/';
         this.loading = true;

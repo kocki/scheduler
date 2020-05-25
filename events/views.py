@@ -32,6 +32,8 @@ class EventTypesViewSet(viewsets.ModelViewSet):
 
 class EventSerializer(serializers.ModelSerializer):
 
+    event_type_id = serializers.IntegerField()
+
     class Meta:
         model = Event
         fields = (
@@ -48,7 +50,7 @@ class EventsViewSet(viewsets.ModelViewSet):
 
     filter_backends = [filters.SearchFilter]
     permission_classes = (permissions.AllowAny,)
-    queryset = Event.objects.all()
+    queryset = Event.objects.all().order_by('-scheduled')
     search_fields = (
         'description',
         'event_data',
