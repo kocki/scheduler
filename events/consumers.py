@@ -1,9 +1,11 @@
-from asgiref.sync import async_to_sync
-import channels.layers
-from channels.generic.websocket import JsonWebsocketConsumer
+# Django
 from django.db.models import signals
 from django.dispatch import receiver
 
+# 3rd-party
+import channels.layers
+from asgiref.sync import async_to_sync
+from channels.generic.websocket import JsonWebsocketConsumer
 from events.models import Event
 
 ACTIONS = {
@@ -29,7 +31,7 @@ class EventConsumer(JsonWebsocketConsumer):
         self.close()
 
     def receive_json(self, content, **kwargs):
-        print(f"Received event: {content}")
+        print(f'Received event: {content}')
 
     def events_alarm(self, event):
         self.send_json(event['data'])
@@ -44,6 +46,6 @@ class EventConsumer(JsonWebsocketConsumer):
             'type': 'events.alarm',
             'data': {
                 'action': action,
-                'id': instance.pk
-            }
+                'id': instance.pk,
+            },
         })

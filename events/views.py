@@ -5,7 +5,8 @@ for views allowing to change data.
 """
 
 # 3rd-party
-from events.models import Event, EventType
+from events.models import Event
+from events.models import EventType
 from rest_framework import filters
 from rest_framework import permissions
 from rest_framework import serializers
