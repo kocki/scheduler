@@ -1,0 +1,8 @@
+*.pyc
+*.pyo
+*.db
+.DS_Store
+.coverage
+.idea
+.temp
+settings_local.py
