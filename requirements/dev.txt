@@ -1,0 +1,19 @@
+-r base.txt
+
+coloredlogs
+django-extensions
+flake8
+flake8-blind-except
+flake8-coding
+flake8-commas
+flake8-debugger
+flake8-docstrings
+flake8-isort
+flake8-pep3101
+flake8-polyfill
+flake8-quotes
+flake8-string-format
+ipdb
+ipython
+pytest
+pytest-cov

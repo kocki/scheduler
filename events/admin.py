@@ -1,6 +1,9 @@
+# Django
 from django.contrib import admin
 
-from events.models import EventType, Event
+# 3rd-party
+from events.models import Event
+from events.models import EventType
 
 
 @admin.register(EventType)

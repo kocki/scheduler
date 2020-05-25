@@ -1,5 +1,6 @@
 """Project URL Configuration"""
 
+# Django
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include

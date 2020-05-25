@@ -4,9 +4,11 @@ There is no security layer implemented. Should be added at least
 for views allowing to change data.
 """
 
-from rest_framework import viewsets, permissions, serializers
-
+# 3rd-party
 from events.models import Event
+from rest_framework import permissions
+from rest_framework import serializers
+from rest_framework import viewsets
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -14,6 +16,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = (
+            'id',
             'scheduled',
             'event_type',
             'event_data',
