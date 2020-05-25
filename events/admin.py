@@ -28,3 +28,13 @@ class EventAdmin(admin.ModelAdmin):
         'description',
         'created',
     )
+    list_filter = (
+        'event_type',
+        'scheduled',
+        'created',
+    )
+    search_fields = (
+        'event_type__name',
+        'event_data',
+        'descripton',
+    )

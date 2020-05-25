@@ -10,7 +10,7 @@ from django.db import models
 class EventType(models.Model):
     """Event types."""
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, db_index=True)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
